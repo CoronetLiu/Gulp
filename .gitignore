@@ -6,7 +6,6 @@
 
 # production
 /dist
-/release
 /src/css
 
 #minjs
