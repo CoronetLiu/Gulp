@@ -1,0 +1,9 @@
+{
+  "accessKeyId": "LTAI4Fuf1LqDAdNNoA7MfnPV",
+  "accessKeySecret": "ySKWuhG9nAqs11av8ivrFbG3465vA",
+  "pushRoot": "dist",
+  "destination": "cl",
+  "bucket": "coronetliu",
+  "region": "oss-cn-shenzhen",
+  "baseUrl": ""
+}

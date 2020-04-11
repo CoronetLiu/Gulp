@@ -1,4 +1,4 @@
-var gulp = require('gulp'),
+const gulp = require('gulp'),
     //编译ES6
     babel = require('gulp-babel'),
     //压缩js
@@ -22,6 +22,18 @@ var gulp = require('gulp'),
     runSequence = require('gulp-run-sequence'),
     //用来删除文件
     clean = require('gulp-clean');
+
+//无需监听打包的文件夹名称
+const exceptFile = ['checkin'];
+
+//生成监听src
+function generateSrc(def, type) {
+  let arr = [def];
+  for (let i = 0; i < exceptFile.length; i++) {
+    arr.push('!src/' + type + '/' + exceptFile[i] + '/**');
+  }
+  return arr;
+}
 
 //创建一个名为default的任务（这个任务必须有，不然在终端执行gulp命令会报错）
 gulp.task('default', ['start'], function () {
@@ -96,6 +108,15 @@ gulp.task('images', function () {
         .pipe(gulp.dest('dist/images'))
 });
 
+//创建一个名为utils的任务
+gulp.task('utils', function() {
+  return gulp.src('src/utils/**/*')
+    .pipe(connect.reload()) //重新加载
+    //错误管理模块
+    .pipe(plumber())
+    .pipe(gulp.dest('dist/utils'));
+});
+
 //创建一个名为clean的任务
 gulp.task('clean', function () {
     return gulp.src('dist/*', {read: false})
@@ -114,5 +135,5 @@ gulp.task('watch', ['build'], function () {
 //创建一个名为start的任务
 gulp.task('start', function () {
     //先运行clean，然后并行运行html,js,less,images,打包完毕后再监听watch
-    runSequence(['clean'], ['html', 'less', 'js', 'images'], ['watch']);
+    runSequence(['clean'], ['html', 'less', 'js', 'images', 'utils'], ['watch']);
 });
